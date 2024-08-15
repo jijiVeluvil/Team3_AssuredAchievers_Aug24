@@ -1,6 +1,6 @@
 
 @tag
-Feature: Dietician Module
+Feature: Dietician Module E2E
 
   @tag1
  
