@@ -9,7 +9,7 @@ import DietitianPojo.UserLogin;
 
 public class DataHandler {
 
-	static final String path="/Users/ashwini/Desktop/UserLogin.xlsx";
+	static final String path="./src/test/resources/UserLogin.xlsx";
 
 	public static Map<String, String> getData(String scenario)
 	{
