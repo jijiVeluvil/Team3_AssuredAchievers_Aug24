@@ -12,10 +12,7 @@ public class APIConstant {
 	public static final String CREATE_DIETICIAN_ENDPOINT = "/dietician";
 	public static final String CREATE_Patient_ENDPOINT = "/patient";
 	public static final String UPDATE_Patient_ENDPOINT = "/patient/newReports";
-
 	public static final String viewFile_endpoint = "/patient/testReports/viewFile";
-
-	
 	public static final String CREATE_Patient_TestReport_ENDPOINT = "/patient/testReports";
-
+	public static final String USER_LOGOUT_ENDPOINT = "/logoutdietician";
 }

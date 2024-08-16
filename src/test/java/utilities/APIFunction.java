@@ -32,8 +32,6 @@ public class APIFunction {
 
 		if(singleDataRow.get("method")!=null && !singleDataRow.get("method").isEmpty())
 			this.method=singleDataRow.get("method");
-		else
-			this.method=APIConstant.POST;
 
 		if(singleDataRow.get("contentType")!=null && !singleDataRow.get("contentType").isEmpty())
 			this.contentType=singleDataRow.get("contentType");
@@ -45,9 +43,7 @@ public class APIFunction {
 
 		builder.setBody(body);
 		
-		System.out.println("using request body ---> "+body);
-
-		
+		System.out.println("using request body ---> "+body);	
 		
 	}
 	
