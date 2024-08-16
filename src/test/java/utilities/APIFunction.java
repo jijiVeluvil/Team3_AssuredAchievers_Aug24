@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import io.restassured.response.ResponseOptions;
 import io.restassured.specification.RequestSpecification;
 
+
 public class APIFunction {
 
 	RequestSpecBuilder builder=new RequestSpecBuilder();
@@ -30,13 +31,24 @@ public class APIFunction {
 			endpoint=singleDataRow.get("endpoint");
 
 		if(singleDataRow.get("method")!=null && !singleDataRow.get("method").isEmpty())
-			method=singleDataRow.get("method");
-
-		//apiFunction=new APIFunction(null,endpoint, method,	body);
+			this.method=singleDataRow.get("method");
+		else
+			this.method=APIConstant.POST;
 
 		if(singleDataRow.get("contentType")!=null && !singleDataRow.get("contentType").isEmpty())
-			contentType=singleDataRow.get("contentType");
+			this.contentType=singleDataRow.get("contentType");
+		else
+			this.contentType="application/json";
+		
+		
+		this.url=APIConstant.BASE_URL+endpoint;
 
+		builder.setBody(body);
+		
+		System.out.println("using request body ---> "+body);
+
+		
+		
 	}
 	
     /**
