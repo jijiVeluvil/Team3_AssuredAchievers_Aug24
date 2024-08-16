@@ -14,54 +14,100 @@ public class APIFunction {
 	public String method;
 	public String url;
 	public ResponseOptions<Response> response;
-	
+
 	public String contentType;
 	
-	public APIFunction(String uri,String method,String token) {
+	/**
+	 * APIFunction is constructor used for invalid type if pass through file
+	 * @param body
+	 * @param endpoint
+	 * @param method
+	 * @param singleDataRow
+	 */
+	public APIFunction(String body,String endpoint,String method,Map<String,String> singleDataRow ) {
+
+		if(singleDataRow.get("endpoint")!=null && !singleDataRow.get("endpoint").isEmpty())
+			endpoint=singleDataRow.get("endpoint");
+
+		if(singleDataRow.get("method")!=null && !singleDataRow.get("method").isEmpty())
+			method=singleDataRow.get("method");
+
+		//apiFunction=new APIFunction(null,endpoint, method,	body);
+
+		if(singleDataRow.get("contentType")!=null && !singleDataRow.get("contentType").isEmpty())
+			contentType=singleDataRow.get("contentType");
+
+	}
+	
+    /**
+     * APIFunction is constructor works for get / delete / logout
+     * @param token
+     * @param uri
+     * @param method
+     */
+	public APIFunction(String token,String uri,String method) {
 
 		reuse(uri,method);
-	
+
 		if(token!=null)
 		{
 			builder.addHeader("Authorization", "Bearer "+token);
 		}
-		
-	}
 
-	public APIFunction(String uri,String method,String body, String token) {
+	}
+	/**
+	 * APIFunction is constructor works for post / put / login 
+	 * @param token
+	 * @param uri
+	 * @param method
+	 * @param body
+	 */
+	public APIFunction( String token,String uri,String method,String body) {
 
 		reuse(uri,method);
 
 		builder.setBody(body);
-		
+
 		if(token!=null)
 		{
 			builder.addHeader("Authorization", "Bearer "+token);
-			
+
 		}
 	}
-	
-	public APIFunction(String uri,String method,Map<String,String> body, String token) {
+	/**
+	 * APIFunction for patient with following parameter
+	 * @param uri
+	 * @param method
+	 * @param token
+	 * @param patientDataFieldsVo
+	 */
+
+	public APIFunction(String uri,String method, String token,DietitianPojo.PatientDataFieldsVo patientDataFieldsVo) {
 
 		reuse(uri,method);
-		
-		builder.setBody(body);
+
+		builder.addMultiPart("patientInfo", patientDataFieldsVo.getPatientInfo());
+
+		if(patientDataFieldsVo.getVitals()!=null)
+			builder.addMultiPart("vitals", patientDataFieldsVo.getVitals());
+
+		if(patientDataFieldsVo.getReportFile()!=null)
+			builder.addMultiPart ("file",patientDataFieldsVo.getReportFile(),"application/pdf");
+
+
+		contentType="multipart/form-data";
 
 		if(token!=null)
 		{
 			builder.addHeader("Authorization", "Bearer "+token);
 		}
 	}
-
 
 
 	private void reuse(String uri, String method) {
 
 		this.url=APIConstant.BASE_URL+uri;
 		this.method=method;
-
-		System.out.println("URL--> "+url);
-		System.out.println("Method -> "+this.method);
 
 	}
 
@@ -72,16 +118,15 @@ public class APIFunction {
 	 */
 	public ResponseOptions<Response> ExecuteAPI()
 	{
+
 		RequestSpecification requestSpecification=builder.build();
 		RequestSpecification request=RestAssured.given();
-		
+
 		if(contentType==null||contentType.isBlank())
 			contentType="application/json";
-		
-		System.out.println("using contentType ---> "+contentType);
-		
+
 		request.contentType(contentType);
-		
+
 		request.spec(requestSpecification);
 
 		if(this.method.equalsIgnoreCase(APIConstant.POST))
@@ -93,6 +138,17 @@ public class APIFunction {
 		else if(this.method.equalsIgnoreCase(APIConstant.PUT))
 			response= request.put(this.url);
 
+		System.out.println(" ----------------- API Call ---------------------");
+
+		System.out.println("URL--> "+url);
+		System.out.println("Method -> "+this.method);
+		System.out.println("using contentType ---> "+contentType);
+		System.out.println("response ---> "+response.getBody().asPrettyString());
+
+		System.out.println(" --------------------------------------");
+
+
+		
 		return response;
 	}
 
