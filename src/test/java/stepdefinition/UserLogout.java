@@ -23,7 +23,7 @@ public class UserLogout {
 
 		System.out.println("Using token for logout ; Key :  "+singleDataRow.get("TokenName") +", Value : "+Tokens.TokenMap.get(singleDataRow.get("TokenName")));
 
-		apiFunction = new APIFunction(Tokens.TokenMap.get(singleDataRow.get("TokenName")),null,APIConstant.GET,singleDataRow);
+		apiFunction = new APIFunction(null,APIConstant.USER_LOGOUT_ENDPOINT,APIConstant.GET,singleDataRow,Tokens.TokenMap.get(singleDataRow.get("TokenName")));
 
 	}
 
