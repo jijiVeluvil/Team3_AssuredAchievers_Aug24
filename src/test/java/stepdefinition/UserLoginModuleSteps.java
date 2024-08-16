@@ -44,14 +44,18 @@ public class UserLoginModuleSteps
 
 	@When("User send POST HTTP request with endpoint")
 	public void user_send_post_http_request_with_endpoint()  {
-		
+
 		ResponseOptions<Response> resp=apiFunction.ExecuteAPI();
 
 		if(resp.getStatusCode()==200)
 		{
-			Tokens.AdminToken= resp.body().path("token");
-			System.out.println("----------Admin's token ----------");
-			System.out.println(Tokens.AdminToken);
+			if(resp.body().path("token")!=null && singleDataRow.get("TokenName") !=null)
+			{
+				System.out.println("Saving token; Key :  "+singleDataRow.get("TokenName") +", Value : "+resp.body().path("token"));
+
+				Tokens.TokenMap.put(singleDataRow.get("TokenName") ,resp.body().path("token"));
+			}
+
 		}
 
 	}
@@ -62,8 +66,8 @@ public class UserLoginModuleSteps
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
 	}
-	
-	
+
+
 	@Given("User creates dietician {string} Post request with request body")
 	public void user_creates_dietician_post_request_with_request_body(String testcase) {
 
@@ -71,7 +75,7 @@ public class UserLoginModuleSteps
 
 		System.out.println("dietician Request Body---->"+dieticianRequestBody);
 
-		apiFunction=new APIFunction(Tokens.AdminToken,APIConstant.CREATE_DIETICIAN_ENDPOINT, APIConstant.POST, 
+		apiFunction=new APIFunction(Tokens.TokenMap.get("AdminToken"),APIConstant.CREATE_DIETICIAN_ENDPOINT, APIConstant.POST, 
 				dieticianRequestBody);
 
 	}
@@ -79,9 +83,9 @@ public class UserLoginModuleSteps
 	@Then("User saves the admin token")
 	public void user_saves_the_admin_token() {
 
-		Tokens.AdminToken= apiFunction.response.body().path("token");
-		System.out.println("----------Admin's token ----------");
-		System.out.println(Tokens.AdminToken);
+		Tokens.TokenMap.put("AdminToken",apiFunction.response.body().path("token"));
+		System.out.println("Saving token; Key :  AdminToken, Value : "+apiFunction.response.body().path("token"));
+
 	}
 
 	@Then("User generates the dietician token")
@@ -92,10 +96,10 @@ public class UserLoginModuleSteps
 		APIFunction login= new APIFunction(null,APIConstant.USER_LOGIN_ENDPOINT, APIConstant.POST, 
 				new Gson().toJson(user));
 		ResponseOptions<Response> resp= login.ExecuteAPI();
-		Tokens.DieticianToken= resp.body().path("token");
 
-		System.out.println("----------Dietician's token ----------");
-		System.out.println(Tokens.DieticianToken);
+		Tokens.TokenMap.put("DieticianToken",resp.body().path("token"));
+		System.out.println("Saving token; Key :  DieticianToken , Value : "+apiFunction.response.body().path("token"));
+
 	}
 
 
@@ -110,10 +114,10 @@ public class UserLoginModuleSteps
 		APIFunction login= new APIFunction(null,APIConstant.USER_LOGIN_ENDPOINT, APIConstant.POST, 
 				new Gson().toJson(user));
 		ResponseOptions<Response> resp= login.ExecuteAPI();
-		Tokens.PatientToken= resp.body().path("token");
 
-		System.out.println("----------Patient's token ----------");
-		System.out.println(Tokens.PatientToken);
+
+		Tokens.TokenMap.put("PatientToken",resp.body().path("token"));
+		System.out.println("Saving token; Key :  PatientToken , Value : "+apiFunction.response.body().path("token"));
 	}
 
 
@@ -129,7 +133,7 @@ public class UserLoginModuleSteps
 		patientInfo.setPatientInfo(patientRequestBody);
 
 		apiFunction=new APIFunction(APIConstant.CREATE_Patient_ENDPOINT, APIConstant.POST, 
-				Tokens.DieticianToken,patientInfo);
+				Tokens.TokenMap.get("DieticianToken"),patientInfo);
 
 	}
 
@@ -138,7 +142,7 @@ public class UserLoginModuleSteps
 	@Then("User checks patient testReports")
 	public void user_checks_patient_test_reports() {
 
-		APIFunction testReport= new APIFunction(Tokens.PatientToken,APIConstant.CREATE_Patient_TestReport_ENDPOINT+"/"+Tokens.PatientID, APIConstant.GET, 
+		APIFunction testReport= new APIFunction(Tokens.TokenMap.get("PatientToken"),APIConstant.CREATE_Patient_TestReport_ENDPOINT+"/"+Tokens.PatientID, APIConstant.GET, 
 				"");
 		testReport.ExecuteAPI();
 		System.out.println("patient testReports response--> "+testReport.response.body().asPrettyString());
@@ -165,7 +169,7 @@ public class UserLoginModuleSteps
 		patientInfo.setReportFile(new File("/Users/ashwini/Downloads/Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf"));
 
 		apiFunction=new APIFunction(APIConstant.UPDATE_Patient_ENDPOINT+"/"+Tokens.PatientID, APIConstant.PUT, 
-				Tokens.DieticianToken,patientInfo);
+				Tokens.TokenMap.get("DieticianToken"),patientInfo);
 
 		apiFunction.ExecuteAPI();
 		System.out.println(" updatePatient response--> "+apiFunction.response.body().asPrettyString());
@@ -200,7 +204,7 @@ public class UserLoginModuleSteps
 
 			System.out.println("checking report for file id "+fileId);
 
-			APIFunction	checkReport=new APIFunction(Tokens.DieticianToken,APIConstant.viewFile_endpoint+"/"+fileId, APIConstant.GET);
+			APIFunction	checkReport=new APIFunction(Tokens.TokenMap.get("DieticianToken"),APIConstant.viewFile_endpoint+"/"+fileId, APIConstant.GET);
 			checkReport.ExecuteAPI();
 
 			System.out.println("dietician checkReport/viewfile response status--> "+checkReport.response.getStatusCode());
@@ -208,9 +212,9 @@ public class UserLoginModuleSteps
 		}
 	}
 
-	
+
 	//--------- for testing complete flow --------
-	
+
 	@Given("User creates login  Post request with request body")
 	public void user_creates_login_post_request_with_request_body() {
 

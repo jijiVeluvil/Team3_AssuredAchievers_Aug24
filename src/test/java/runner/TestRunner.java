@@ -11,7 +11,7 @@ import io.cucumber.junit.CucumberOptions;
 		},
 		monochrome=false,
 		dryRun=false,
-		features= {"src/test/resources/features/userLoginModule.feature"},
+		features= {"/Team3_AssuredAchievers_Aug24/src/test/resources/features/userLoginModule1.feature","/Team3_AssuredAchievers_Aug24/src/test/resources/features/UserLogout.feature"},
 		glue={"stepdefinition","hooks","features"}
 		)
 

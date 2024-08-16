@@ -43,7 +43,7 @@ public class DataHandler {
 		Map<String,String> dataMap=listOfRows.get(0);
 		dataMap.put("ContactNumber",RandomStringUtils.randomNumeric(10));
 		dataMap.put("Email",("amDietician"+RandomStringUtils.randomNumeric(5)+"@gmail.com"));
-
+		
 		return new Gson().toJson(dataMap);
 	}
 	
@@ -58,5 +58,13 @@ public class DataHandler {
 		dataMap.remove("scenario");
 
 		return new Gson().toJson(dataMap);
+	}
+	
+	public static String Logout(String scenario) {
+		ExcelReader excelReader = new ExcelReader();
+		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from LogOutSheet where scenario='"+scenario+"' ");
+		Map<String,String> dataMap=listOfRows.get(0);
+		return new Gson().toJson(dataMap);
+		
 	}
 }
