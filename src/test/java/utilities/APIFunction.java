@@ -17,7 +17,8 @@ public class APIFunction {
 	public ResponseOptions<Response> response;
 
 	public String contentType;
-	
+
+
 	/**
 	 * APIFunction is constructor used for invalid type if pass through file
 	 * @param body
@@ -26,6 +27,23 @@ public class APIFunction {
 	 * @param singleDataRow
 	 */
 	public APIFunction(String body,String endpoint,String method,Map<String,String> singleDataRow ) {
+
+		commonInit(body, endpoint, method, singleDataRow);
+
+	}
+
+	public APIFunction(String body,String endpoint,String method,Map<String,String> singleDataRow,String token ) {
+
+		commonInit(body, endpoint, method, singleDataRow);
+
+		if(token!=null)
+		{
+			builder.addHeader("Authorization", "Bearer "+token);
+		}
+	}
+
+
+	private void commonInit(String body,String endpoint,String method,Map<String,String> singleDataRow ) {
 
 		if(singleDataRow.get("endpoint")!=null && !singleDataRow.get("endpoint").isEmpty())
 			endpoint=singleDataRow.get("endpoint");
@@ -37,22 +55,23 @@ public class APIFunction {
 			this.contentType=singleDataRow.get("contentType");
 		else
 			this.contentType="application/json";
-		
-		
+
+
 		this.url=APIConstant.BASE_URL+endpoint;
 
-		builder.setBody(body);
-		
+		if(body!=null)
+			builder.setBody(body);
+
 		System.out.println("using request body ---> "+body);	
-		
+
 	}
-	
-    /**
-     * APIFunction is constructor works for get / delete / logout
-     * @param token
-     * @param uri
-     * @param method
-     */
+
+	/**
+	 * APIFunction is constructor works for get / delete / logout
+	 * @param token
+	 * @param uri
+	 * @param method
+	 */
 	public APIFunction(String token,String uri,String method) {
 
 		reuse(uri,method);
@@ -156,7 +175,7 @@ public class APIFunction {
 		System.out.println(" --------------------------------------");
 
 
-		
+
 		return response;
 	}
 
