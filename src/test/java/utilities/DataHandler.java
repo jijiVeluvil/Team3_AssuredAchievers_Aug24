@@ -30,7 +30,7 @@ public class DataHandler {
 	public static Map<String, String> getDataRow(String scenario, String row)
 	{
 		ExcelReader excelReader = new ExcelReader();
-		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from LoginSheet");
+		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from "+scenario);
 		return listOfRows.get(Integer.parseInt(row)-1);
 	}
 
