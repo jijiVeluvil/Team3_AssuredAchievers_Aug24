@@ -10,9 +10,9 @@ import io.cucumber.junit.CucumberOptions;
 		},
 		monochrome=false,
 		dryRun=false,
-		features= {"src/test/resources/features/userLoginModule1.feature",
-				"src/test/resources/features/UserLogout.feature",
-				"src/test/resources/features/Morbidity.feature"},
+		features= {"src/test/resources/features/01userLoginModule1.feature",
+				"src/test/resources/features/02Morbidity.feature",
+				"src/test/resources/features/03UserLogout.feature"},
 		glue={"stepdefinition","hooks"}
 		)
 
