@@ -1,30 +1,30 @@
 
 @tag
 Feature: Patient Module
-  
-  @tag1
+ 
   #Create Patient Without Auth
+  @tag1
   Scenario: Check dietician able to create patient with valid data
     Given Dietician creates POST request with valid data 
     When Dietician sends POST request with endpoint
     Then Dietician recieves 401 unauthorized
-   
-  @tag2
+  
   # Set Admin Brarer Token
+  @tag2
   Scenario: Check Check admin able to create patient with valid data and admin token
   Given Admin creates POST request with valid data
   When Admin sends POST http request with endpoint
   Then Admin recieves 403 forbidden
   
-  @tag3
   # Set Patient Bearer Token
+  @tag3
   Scenario: Check patient able to create patient with valid data and patient token  
   When Patient creates POST request with valid data
   Then Patient sends POST http request with endpoint
   When Patient recieves 403 forbidden
   
-  @tag4
   # Set Dietician Bearer Token
+  @tag4
   Scenario: Check dietician able to create patient with valid data and token 
   Given Dietician creates POST request by entering valid data (Mandatory and additional details)
   When Dietician sends POST http request with endpoint
@@ -72,29 +72,29 @@ Feature: Patient Module
   When Dietician sends POST http request with valid endpoint
   Then Dietician recieves 415 unsupported media type
   
-  @tag12
   #PUT without auth
+  @tag12
   Scenario: Check dietician able to update patient with valid data
   Given Dietician creates PUT request by entering valid data 
   When Dietician sends PUT http request with endpoint
   Then Dietician recieves 401 unauthorized
   
-  @tag13
   #Set Admin Bearer Token
+  @tag13
   Scenario: Check admin able to update patient with valid data and admin token
   Given Admin creates PUT request by entering valid data
   When Admin sends PUT http request with endpoint
   Then Admin recieves 403 forbidden
   
-  @tag14
   #Set Patient Bearer Token
+  @tag14
   Scenario: Check patient able to update patient with valid data and patient token
   Given Patient creates PUT request by entering valid data 
   When Patient sends PUT http request with endpoint
   Then Patient recieves 403 forbidden
   
-  @tag15
   #Set Dietician Bearer Token
+  @tag15
   Scenario: Check Dietician able to update patient with valid data, patient id and token 
   Given Dietician creates PUT request by entering valid data (Mandatory and additional details)
   When Dietician sends PUT http request with endpoint
@@ -147,6 +147,9 @@ Feature: Patient Module
   GivenDietician Dietician creates PUT request by entering valid data and invalid content type
   When Dietician sends PUT http request with endpoint
   Then Dietician recieves 415 unsupported media type
+  
+  # additional gherkins
+  # update patient with invalid mandatory data 
   
   
 
