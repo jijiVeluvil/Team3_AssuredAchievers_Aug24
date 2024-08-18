@@ -1,5 +1,6 @@
 package utilities;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +28,10 @@ public class DataHandler {
 		return requestBodyToReturn;
 	}
 
-	public static Map<String, String> getDataRow(String scenario, String row)
+	public static Map<String, String> getDataRow(String sheetName, String row)
 	{
 		ExcelReader excelReader = new ExcelReader();
-		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from "+scenario);
+		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from "+sheetName);
 		return listOfRows.get(Integer.parseInt(row)-1);
 	}
 
@@ -55,7 +56,14 @@ public class DataHandler {
 		Map<String,String> dataMap=listOfRows.get(0);
 		dataMap.put("ContactNumber",RandomStringUtils.randomNumeric(10));
 		dataMap.put("Email",("amPatient"+RandomStringUtils.randomNumeric(5)+"@gmail.com"));
+		
 		dataMap.remove("scenario");
+		dataMap.remove("ContentType");
+		dataMap.remove("EndPoint");
+		dataMap.remove("ExpectedCode");
+		dataMap.remove("Method");
+		dataMap.remove("PatientId");
+		dataMap.remove("TokenName");
 
 		return new Gson().toJson(dataMap);
 	}
