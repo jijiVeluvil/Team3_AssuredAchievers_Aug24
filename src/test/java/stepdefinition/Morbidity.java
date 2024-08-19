@@ -163,11 +163,11 @@ public class Morbidity {
 
 //***********************************Get Morbidity by test name****************************************
 
-	 @Given("Dietician creates GET request to check morbidity by {string} and {string}")
+	 @Given("Dietician creates GET request to check morbidity by {string} and {string} with no auth")
     public void dietician_creates_get_request_to_check_morbidity_by_and(String sheet, String row) {
         singleDataRow = DataHandler.getDataRowMor(sheet, row);
 
-        apiFunction = new APIFunction(Tokens.TokenMap.get("DieticianToken"),
+        apiFunction = new APIFunction(null,
         		APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),APIConstant.GET);
        
     }
@@ -179,7 +179,7 @@ public class Morbidity {
 
     @Then("Dietician receives response code for morbidity request")
     public void dietician_receives_response_code_for_morbidity_request() {
-        System.out.println("Expected code : " + singleDataRow.get("expectedCode") + ", Actual code : " + apiFunction.response.getStatusCode());
+       // System.out.println("Expected code : " + singleDataRow.get("expectedCode") + ", Actual code : " + apiFunction.response.getStatusCode());
         Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
     }
     
@@ -190,7 +190,8 @@ public class Morbidity {
     	
     	singleDataRow = DataHandler.getDataRowMor(sheet, row);
      
-        apiFunction = new APIFunction(APIConstant.GET,Tokens.TokenMap.get("PatientToken"),APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),
+        apiFunction = new APIFunction(APIConstant.GET,Tokens.TokenMap.get("PatientToken"),
+        		APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),
      		  APIConstant.GET );
        
     }
@@ -202,7 +203,7 @@ public class Morbidity {
     
 //*****************************************Admin retrieve***************************************************    
 
-    @Given("admin create GET request  to check morbidity by {string} and {string}")
+    @Given("Admin creates GET request to check morbidity by {string} and {string}")
     public void admin_create_get_request_to_check_morbidity_by_and(String sheet, String row) {
     	singleDataRow = DataHandler.getDataRowMor(sheet, row);
 
@@ -210,14 +211,14 @@ public class Morbidity {
 		  APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),APIConstant.GET);
     }
 
-    @When("admin send http request with endpoint")
+    @When("Admin send http request with endpoint")
     public void admin_send_http_request_with_endpoint() {
         apiFunction.ExecuteAPI();
     }
 
 //********************************Admin retrieve by invalid method********************************************
     
-    @Given("admin create POST request to check morbidity by {string} and {string}")
+    @Given("Admin creates POST request to check morbidity by {string} and {string}")
     public void admin_create_POST_request_to_check_morbidity_by(String sheet,String row) {
     
     	singleDataRow = DataHandler.getDataRowMor(sheet, row);
@@ -228,30 +229,69 @@ public class Morbidity {
  }
     
  //*********************************************Admin with invalid testname*********************************
-    @Given("admin create GET request with invalid test name by {string} and {string}")
+    @Given("Admin creates GET request with invalid test name by {string} and {string}")
     public void admin_create_GET_request_with_invalid_testname_by(String sheet,String row) {
+    	
+    	singleDataRow = DataHandler.getDataRowMor(sheet, row);
     	 apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"),
     			  APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),APIConstant.GET);
     	
     }
 //**********************************Admin with invalid endpoint*****************************************
     
-    @Given("admin create GET request with invalid endpoint")
+    @Given("Admin creates GET request with an invalid endpoint")
     public void admin_create_GET_request_with_invalid_endpoint() {
     
-    	apiFunction = new APIFunction(Tokens.TokenMap.get("DieticianToken"), APIConstant.GET_ALL_MORBIDITY_INVALID,
+    	apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), APIConstant.GET_ALL_MORBIDITY_INVALID,
 				APIConstant.GET);	
     	
     }
     
  //*************************************Dietician by testname*********************************************
     
-    @Given("Dietician create GET request to check morbidity by {string} and {string}")
+    @Given("Dietician creates GET request to check morbidity by {string} and {string}")
     public void dietician_creatw_get_request_to_check_morbidity_by(String sheet,String row) {
+    	
+    	singleDataRow = DataHandler.getDataRowMor(sheet, row);
     	
     	apiFunction = new APIFunction(Tokens.TokenMap.get("DieticianToken"),
         		APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),APIConstant.GET);   	
     	
     }
+    
+//*************************************Dietician by invalid method*******************************************************
+    
+    @Given("Dietician create POST request to check morbidity by {string} and {string}")
+    public void dietician_create_post_request_to_check_morbidity_by(String sheet,String row) {
+    	
+    	singleDataRow = DataHandler.getDataRowMor(sheet, row);
+
+    	   apiFunction = new APIFunction(Tokens.TokenMap.get("DieticianToken"),
+    			   APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),
+    	    APIConstant.POST); 	
+    	
+    	
+    }
+    
+//*********************************************Dietician by invalid test name**********************************************
+    @Given("Dietician creates GET request to check morbidity by {string} and {string} invalid test name")
+    public void dietician_create_get_request_to_check_morbidity_by(String sheet,String row) {
+    	
+    	singleDataRow = DataHandler.getDataRowMor(sheet, row);
+    	
+    	apiFunction = new APIFunction(Tokens.TokenMap.get("DieticianToken"),
+        		APIConstant.GET_ALL_MORBIDITY + "/" + singleDataRow.get("testname"),APIConstant.GET);  
+    	
+    }
+    
+//***********************************************DIetician by invalid endpoint**************************************************
+    @Given("Dietician creates GET request with an invalid endpoint")
+    public void dietician_creates_get_request_with_an_invalid_endpoint() {
+    	
+    	apiFunction = new APIFunction(Tokens.TokenMap.get("DieticianToken"), APIConstant.GET_ALL_MORBIDITY_INVALID,
+				APIConstant.GET);
+    	
+    }
+    
 }
 
