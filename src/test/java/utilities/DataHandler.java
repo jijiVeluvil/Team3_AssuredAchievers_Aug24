@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import com.google.gson.Gson;
 
 import DietitianPojo.UserLogin;
+import io.restassured.response.Response;
 
 public class DataHandler {
 
@@ -34,6 +35,7 @@ public class DataHandler {
 		return listOfRows.get(Integer.parseInt(row)-1);
 	}
 
+	
 
 	public static String GetDieticianRequestBody(String scenario)
 	{
@@ -59,6 +61,13 @@ public class DataHandler {
 
 		return new Gson().toJson(dataMap);
 	}
+	
+	public static Map<String, String> getDataRowMor(String sheetName, String row) {
+	    ExcelReader excelReader = new ExcelReader();
+	    List<Map<String, String>> listOfRows = excelReader.getExcelDataWithFilloAPI(path, "Select * from " + sheetName);
+	    return listOfRows.get(Integer.parseInt(row) - 1);
+	}
+
 	
 	public static String Logout(String scenario) {
 		ExcelReader excelReader = new ExcelReader();

@@ -19,7 +19,6 @@ public class APIConstant {
 	public static final String USER_LOGOUT_ENDPOINT = "/logoutdietician";
 	
 	public static  final String GET_ALL_MORBIDITY = "/morbidity";
-	public static final  String GET_MORBIDITY_BY_TESTNAME = "/morbidity/{morbidityName}";
 	public static final String GET_ALL_MORBIDITY_INVALID ="/morbidityin";
 	
 }
