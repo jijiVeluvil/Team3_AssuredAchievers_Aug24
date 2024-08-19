@@ -1,0 +1,124 @@
+{
+  
+  "type": "object",
+  "properties": {
+    "patientId": {
+      "type": "integer"
+    },
+    "FirstName": {
+      "type": "string"
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "ContactNumber": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Allergy": {
+      "type": "string"
+    },
+    "FoodPreference": {
+      "type": "string"
+    },
+    "CuisineCategory": {
+      "type": "string"
+    },
+    "FileMorbidity": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "object",
+          "properties": {
+            "T4": {
+              "type": "string"
+            },
+            "TSH": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "T4",
+            "TSH"
+          ]
+        }
+      },
+      "required": [
+        "fileId"
+      ]
+    },
+    "FileMorbidityCondition": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fileId"
+      ]
+    },
+    "DateOfBirth": {
+      "type": "string"
+    },
+    "DieticianId": {
+      "type": "integer"
+    },
+    "Vitals": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "object",
+          "properties": {
+            "Weight": {
+              "type": "number"
+            },
+            "Height": {
+              "type": "number"
+            },
+            "Temperature": {
+              "type": "number"
+            },
+            "SP": {
+              "type": "integer"
+            },
+            "DP": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "Weight",
+            "Height",
+            "Temperature",
+            "SP",
+            "DP"
+          ]
+        }
+      },
+      "required": [
+        "fileId"
+      ]
+    },
+    "LastVisitDate": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "patientId",
+    "FirstName",
+    "LastName",
+    "ContactNumber",
+    "Email",
+    "Allergy",
+    "FoodPreference",
+    "CuisineCategory",
+    "FileMorbidity",
+    "FileMorbidityCondition",
+    "DateOfBirth",
+    "DieticianId",
+    "Vitals",
+    "LastVisitDate"
+  ]
+}
