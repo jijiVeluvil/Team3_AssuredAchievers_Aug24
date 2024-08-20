@@ -53,7 +53,7 @@ public class UserLoginModuleSteps
 	public void user_send_post_http_request_with_endpoint()  {
 
 		apiFunction.ExecuteAPI();
-		
+
 	}
 
 	@Then("User recieves response code")
@@ -71,24 +71,22 @@ public class UserLoginModuleSteps
 
 				System.out.println("--------- Json Schema Validation -------------");
 				apiFunction.response.then().body(JsonSchemaValidator.matchesJsonSchema(loginjsonSchema));
-				
+
 				System.out.println("--------- Logging header ------------\n");
 				apiFunction.response.then().log().headers();	
-				
+
 				System.out.println("--------- Logging status -------------\n");
 				apiFunction.response.then().log().status();
-				
-			}
 
+			}
 		}
-		
+
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
-
 
 	}
 
 }
-	
+
 
 
