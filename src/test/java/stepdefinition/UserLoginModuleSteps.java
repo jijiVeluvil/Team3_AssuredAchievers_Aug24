@@ -1,7 +1,5 @@
 package stepdefinition;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -78,16 +76,16 @@ public class UserLoginModuleSteps
 				Tokens.TokenMap.put(singleDataRow.get("TokenName") ,apiFunction.response.body().path("token"));
 
 				apiFunction.response.then().body(JsonSchemaValidator.matchesJsonSchema(loginjsonSchema));
-				apiFunction.response.then().log().body(true);
-				
-				
+				System.out.println("--------- Logging content type and status -------------");
+				apiFunction.response.then().log().headers();
+				apiFunction.response.then().log().status();
+
 			}
 
 		}
 		
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
-		apiFunction.response.then().log().status();
 
 
 	}

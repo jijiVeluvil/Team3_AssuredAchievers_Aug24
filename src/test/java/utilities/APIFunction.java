@@ -3,6 +3,7 @@ package utilities;
 import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -43,6 +44,12 @@ public class APIFunction {
 
 	private void commonInit(String body,String endpoint,String method,Map<String,String> singleDataRow ) {
 
+		builder.log(LogDetail.BODY);
+		builder.log(LogDetail.METHOD);
+		builder.log(LogDetail.PARAMS);
+		builder.log(LogDetail.URI);
+
+		
 		if(singleDataRow.get("endpoint")!=null && !singleDataRow.get("endpoint").isEmpty())
 			endpoint=singleDataRow.get("endpoint");
 
@@ -60,8 +67,8 @@ public class APIFunction {
 		if(body!=null)
 			builder.setBody(body);
 		
-		System.out.println("using request body ---> "+(body));	
-
+		
+		
 	}
 
 	/**
@@ -109,6 +116,11 @@ public class APIFunction {
 
 	public APIFunction(String uri,String method, String token,DietitianPojo.PatientDataFieldsVo patientDataFieldsVo) {
 
+		builder.log(LogDetail.BODY);
+		builder.log(LogDetail.METHOD);
+		builder.log(LogDetail.PARAMS);
+		builder.log(LogDetail.URI);
+		
 		reuse(uri,method);
 
 		builder.addMultiPart("patientInfo", patientDataFieldsVo.getPatientInfo());
@@ -164,13 +176,15 @@ public class APIFunction {
 			response= request.put(this.url);
 
 		System.out.println(" ----------------- API Call ---------------------");
-
+		
 		System.out.println("URL--> "+url);
 		System.out.println("Method -> "+this.method);
 		System.out.println("using contentType ---> "+contentType);
-		System.out.println("response ---> "+response.getBody().asPrettyString());
-
-		System.out.println(" --------------------------------------");
+		//System.out.println("response ---> "+response.getBody().asPrettyString());
+		System.out.println("Logging ResponseBody --->");
+		response.then().log().body(true);
+		response.then().log().status();
+		System.out.println(" ------------------------------------------------");
 
 
 
