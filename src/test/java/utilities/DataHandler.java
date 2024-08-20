@@ -64,6 +64,10 @@ public class DataHandler {
 		dataMap.remove("Method");
 		dataMap.remove("PatientId");
 		dataMap.remove("TokenName");
+		
+		dataMap.remove("File");
+		dataMap.remove("Vitals");
+		
 
 		return new Gson().toJson(dataMap);
 	}

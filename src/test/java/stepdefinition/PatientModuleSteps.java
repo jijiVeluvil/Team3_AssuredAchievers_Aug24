@@ -37,7 +37,7 @@ public class PatientModuleSteps {
 		singleDataRow = DataHandler.getDataRow(sheetName, row);
 		String patientRequestBody = DataHandler.GetPatientRequestBody(scenario);
 
-		System.out.println("Patient Request Body---->" + patientRequestBody);
+		//System.out.println("Patient Request Body---->" + patientRequestBody);
 
 		PatientDataFieldsVo patientInfo = new PatientDataFieldsVo();
 		String filePath = ".\\src\\test\\resources\\filePath.pdf";
@@ -56,6 +56,7 @@ public class PatientModuleSteps {
 	public void dietician_sends_post_request_with_endpoint() {
 		ResponseOptions<Response> resp = apiFunction.ExecuteAPI();
 		System.out.println("patient response--> " + resp.body().asPrettyString());
+		System.out.println("status code == "+ resp.getStatusCode());
 		if (resp.getStatusCode() == 201) {
 			// setting the patient id,email and fileId to Patient map
 			patientId = singleDataRow.get("PatientId");
@@ -63,7 +64,7 @@ public class PatientModuleSteps {
 			patientFileId = patientId + "_FileId";
 			Tokens.PatientMap.put(patientId, Integer.toString(resp.body().path("patientId")));
 			Tokens.PatientMap.put(patientEmail, resp.body().path("Email"));
-			Tokens.PatientMap.put(patientFileId, resp.body().path("fileId"));
+			Tokens.PatientMap.put(patientFileId, resp.body().path("fileID"));
 		}
 	}
 
@@ -71,6 +72,7 @@ public class PatientModuleSteps {
 	public void dietician_recieves_response_code() {
 		System.out.println("Expected code : " + singleDataRow.get("expectedCode") + ", Actual code : "
 				+ apiFunction.response.getStatusCode());
+		System.out.println("RESPONSE OBJECT= " + apiFunction.response);
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
 	}
 
