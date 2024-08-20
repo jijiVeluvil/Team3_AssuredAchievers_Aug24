@@ -43,12 +43,10 @@ public class APIFunction {
 
 
 	private void commonInit(String body,String endpoint,String method,Map<String,String> singleDataRow ) {
-
-		builder.log(LogDetail.BODY);
-		builder.log(LogDetail.METHOD);
-		builder.log(LogDetail.PARAMS);
 		builder.log(LogDetail.URI);
-
+		builder.log(LogDetail.METHOD);
+		builder.log(LogDetail.BODY);
+		builder.log(LogDetail.PARAMS);
 		
 		if(singleDataRow.get("endpoint")!=null && !singleDataRow.get("endpoint").isEmpty())
 			endpoint=singleDataRow.get("endpoint");
@@ -63,6 +61,7 @@ public class APIFunction {
 
 
 		this.url=APIConstant.BASE_URL+endpoint;
+		System.out.println("Using Request ContentType ---> "+this.contentType);
 
 		if(body!=null)
 			builder.setBody(body);
@@ -115,12 +114,12 @@ public class APIFunction {
 	 */
 
 	public APIFunction(String uri,String method, String token,DietitianPojo.PatientDataFieldsVo patientDataFieldsVo) {
-
-		builder.log(LogDetail.BODY);
-		builder.log(LogDetail.METHOD);
-		builder.log(LogDetail.PARAMS);
-		builder.log(LogDetail.URI);
 		
+		builder.log(LogDetail.URI);
+		builder.log(LogDetail.METHOD);
+		builder.log(LogDetail.BODY);
+		builder.log(LogDetail.PARAMS);
+
 		reuse(uri,method);
 
 		builder.addMultiPart("patientInfo", patientDataFieldsVo.getPatientInfo());
@@ -179,11 +178,9 @@ public class APIFunction {
 		
 		System.out.println("URL--> "+url);
 		System.out.println("Method -> "+this.method);
-		System.out.println("using contentType ---> "+contentType);
-		//System.out.println("response ---> "+response.getBody().asPrettyString());
-		System.out.println("Logging ResponseBody --->");
+		System.out.println("Logging ResponseBody --->\n");
 		response.then().log().body(true);
-		response.then().log().status();
+		
 		System.out.println(" ------------------------------------------------");
 
 

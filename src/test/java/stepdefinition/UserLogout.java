@@ -39,8 +39,11 @@ public class UserLogout {
 		
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
+		System.out.println("--------- Logging status -------------\n");
+		apiFunction.response.then().log().status();
+		String contentType="text/plain;charset=UTF-8";
+		System.out.println("--------- Response Content Type -------------\n"+apiFunction.response.contentType());
+		Assert.assertEquals(contentType, apiFunction.response.contentType());		
 
 	}
-
-
 }
