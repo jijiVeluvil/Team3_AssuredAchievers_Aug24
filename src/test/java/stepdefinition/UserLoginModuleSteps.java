@@ -65,9 +65,10 @@ public class UserLoginModuleSteps
 
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
+		
 	}
 
-
+	
 	@Given("User creates dietician {string} Post request with request body")
 	public void user_creates_dietician_post_request_with_request_body(String testcase) {
 
