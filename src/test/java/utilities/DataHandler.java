@@ -1,5 +1,7 @@
 package utilities;
 
+import static io.restassured.RestAssured.given;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import com.google.gson.Gson;
 
 import DietitianPojo.UserLogin;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class DataHandler {
@@ -68,6 +71,7 @@ public class DataHandler {
 	    return listOfRows.get(Integer.parseInt(row) - 1);
 	}
 
+	
 	
 	public static String Logout(String scenario) {
 		ExcelReader excelReader = new ExcelReader();

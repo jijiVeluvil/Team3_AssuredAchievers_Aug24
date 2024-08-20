@@ -9,8 +9,12 @@ import org.junit.Assert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
+import io.restassured.response.Validatable;
+import io.restassured.response.ValidatableResponse;
+import io.restassured.path.json.JsonPath;
 import utilities.APIConstant;
 import utilities.APIFunction;
 import utilities.DataHandler;
@@ -76,9 +80,12 @@ public class Morbidity {
 
 	@Then("admin recieves {int} ok with details of the patient id")
 	public void admin_recieves_ok_with_details_of_the_patient_id(Integer int1) {
+		
 		Assert.assertEquals(int1.intValue(), apiFunction.response.getStatusCode());
 		ResponseBody body = apiFunction.response.getBody();
 		System.out.println(body.prettyPrint());
+		
+		
 
 	}
 
