@@ -3,9 +3,11 @@ package stepdefinition;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 
 import com.google.gson.Gson;
@@ -17,8 +19,8 @@ import DietitianPojo.UserLogin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseOptions;
 import utilities.APIConstant;
 import utilities.APIFunction;
 import utilities.DataHandler;
@@ -28,9 +30,16 @@ public class UserLoginModuleSteps
 {
 	APIFunction apiFunction;
 	Map<String, String> singleDataRow;
+	String loginjsonSchema=null;
 
 	@Given("User creates login Post request with request body for {string} and {string}")
 	public void user_creates_login_post_request_with_request_body_for_and(String sheet, String row) {
+
+		try {
+			loginjsonSchema = FileUtils.readFileToString(new File(APIConstant.LOGIN_SCHEMA_FILE), "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		singleDataRow=DataHandler.getDataRow(sheet,row);
 
@@ -45,30 +54,45 @@ public class UserLoginModuleSteps
 	@When("User send POST HTTP request with endpoint")
 	public void user_send_post_http_request_with_endpoint()  {
 
-		ResponseOptions<Response> resp=apiFunction.ExecuteAPI();
-
-		if(resp.getStatusCode()==200)
-		{
-			if(resp.body().path("token")!=null && singleDataRow.get("TokenName") !=null)
-			{
-				System.out.println("Saving token; Key :  "+singleDataRow.get("TokenName") +", Value : "+resp.body().path("token"));
-
-				Tokens.TokenMap.put(singleDataRow.get("TokenName") ,resp.body().path("token"));
-			}
-
-		}
-
+		apiFunction.ExecuteAPI();
+		
 	}
 
 	@Then("User recieves response code")
 	public void user_recieves_response_code() {
 
+		/*PrintStream log = null;
+		try {
+			log = new PrintStream(new FileOutputStream("logging.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		if(apiFunction.response.getStatusCode()==200)
+		{
+			if(apiFunction.response.body().path("token")!=null && singleDataRow.get("TokenName") !=null)
+			{
+				//log.append("\nSaving token; Key :  "+singleDataRow.get("TokenName") +", Value : "+apiFunction.response.body().path("token"));
+				System.out.println("Saving token; Key :  "+singleDataRow.get("TokenName") +", Value : "+apiFunction.response.body().path("token"));
+
+				Tokens.TokenMap.put(singleDataRow.get("TokenName") ,apiFunction.response.body().path("token"));
+
+				apiFunction.response.then().body(JsonSchemaValidator.matchesJsonSchema(loginjsonSchema));
+				apiFunction.response.then().log().body(true);
+				
+				
+			}
+
+		}
+		
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
-		
+		apiFunction.response.then().log().status();
+
+
 	}
 
-	
+
 	@Given("User creates dietician {string} Post request with request body")
 	public void user_creates_dietician_post_request_with_request_body(String testcase) {
 
@@ -96,7 +120,7 @@ public class UserLoginModuleSteps
 		UserLogin user=new UserLogin( apiFunction.response.body().path("Email"),	 apiFunction.response.body().path("loginPassword"));
 		APIFunction login= new APIFunction(null,APIConstant.USER_LOGIN_ENDPOINT, APIConstant.POST, 
 				new Gson().toJson(user));
-		ResponseOptions<Response> resp= login.ExecuteAPI();
+		Response resp= login.ExecuteAPI();
 
 		Tokens.TokenMap.put("DieticianToken",resp.body().path("token"));
 		System.out.println("Saving token; Key :  DieticianToken , Value : "+apiFunction.response.body().path("token"));
@@ -114,7 +138,7 @@ public class UserLoginModuleSteps
 		System.out.println("Tokens.PatientID= "+Tokens.PatientID);
 		APIFunction login= new APIFunction(null,APIConstant.USER_LOGIN_ENDPOINT, APIConstant.POST, 
 				new Gson().toJson(user));
-		ResponseOptions<Response> resp= login.ExecuteAPI();
+		Response resp= login.ExecuteAPI();
 
 
 		Tokens.TokenMap.put("PatientToken",resp.body().path("token"));

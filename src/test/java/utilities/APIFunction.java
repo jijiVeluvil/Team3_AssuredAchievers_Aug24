@@ -1,11 +1,9 @@
 package utilities;
 
 import java.util.Map;
-
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseOptions;
 import io.restassured.specification.RequestSpecification;
 
 
@@ -14,7 +12,7 @@ public class APIFunction {
 	RequestSpecBuilder builder=new RequestSpecBuilder();
 	public String method;
 	public String url;
-	public ResponseOptions<Response> response;
+	public Response response;
 
 	public String contentType;
 
@@ -61,8 +59,8 @@ public class APIFunction {
 
 		if(body!=null)
 			builder.setBody(body);
-
-		System.out.println("using request body ---> "+body);	
+		
+		System.out.println("using request body ---> "+(body));	
 
 	}
 
@@ -143,7 +141,7 @@ public class APIFunction {
 	 * ExecuteAPI to execute the API for POST,GET,DELETE,PUT
 	 * @return ResponseOptions<Response>
 	 */
-	public ResponseOptions<Response> ExecuteAPI()
+	public Response ExecuteAPI()
 	{
 
 		RequestSpecification requestSpecification=builder.build();
@@ -184,7 +182,7 @@ public class APIFunction {
 	 * @param queryPath
 	 * @return ResponseOptions<Response>
 	 */
-	public ResponseOptions<Response> ExecuteWithQueryParam(Map<String,String> queryPath){
+	public Response ExecuteWithQueryParam(Map<String,String> queryPath){
 		builder.addQueryParams(queryPath);
 		return ExecuteAPI();
 	}
