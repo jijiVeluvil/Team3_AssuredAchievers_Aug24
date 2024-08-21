@@ -1,5 +1,8 @@
 package stepdefinition;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -7,6 +10,9 @@ import org.junit.Assert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import utilities.APIConstant;
 import utilities.APIFunction;
 import utilities.DataHandler;
@@ -18,13 +24,18 @@ public class UserLogout {
 
 
 	@Given("User creates Logout Get request with request body for {string} and {string}")
-	public void user_creates_logout_get_request_with_request_body_for_and(String sheet, String row) {
+	public void user_creates_logout_get_request_with_request_body_for_and(String sheet, String row) throws FileNotFoundException {
+		FileOutputStream file = new FileOutputStream("request_log.txt");
+		PrintStream logoutstream = new PrintStream(file, true);
+
 		singleDataRow=DataHandler.getDataRow(sheet,row);
 
 		System.out.println("Using token for logout ; Key :  "+singleDataRow.get("TokenName") +", Value : "+Tokens.TokenMap.get(singleDataRow.get("TokenName")));
 
 		apiFunction = new APIFunction(null,APIConstant.USER_LOGOUT_ENDPOINT,APIConstant.GET,singleDataRow,Tokens.TokenMap.get(singleDataRow.get("TokenName")));
-
+		
+		RestAssured.filters(RequestLoggingFilter.logRequestTo(logoutstream));
+		RestAssured.filters(ResponseLoggingFilter.logResponseTo(logoutstream));
 	}
 
 	@When("User send POST HTTP request with logout endpoint")

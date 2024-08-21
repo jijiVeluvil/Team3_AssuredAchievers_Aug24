@@ -1,7 +1,10 @@
 package stepdefinition;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +20,9 @@ import DietitianPojo.UserLogin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import utilities.APIConstant;
@@ -31,13 +37,15 @@ public class UserLoginModuleSteps
 	String loginjsonSchema=null;
 
 	@Given("User creates login Post request with request body for {string} and {string}")
-	public void user_creates_login_post_request_with_request_body_for_and(String sheet, String row) {
+	public void user_creates_login_post_request_with_request_body_for_and(String sheet, String row) throws FileNotFoundException {
 
 		try {
 			loginjsonSchema = FileUtils.readFileToString(new File(APIConstant.LOGIN_SCHEMA_FILE), "UTF-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		FileOutputStream file = new FileOutputStream("request_log.txt");
+		PrintStream loginstream = new PrintStream(file, true);
 
 		singleDataRow=DataHandler.getDataRow(sheet,row);
 
@@ -46,6 +54,9 @@ public class UserLoginModuleSteps
 		String body= new Gson().toJson(login);
 
 		apiFunction = new APIFunction(body,APIConstant.USER_LOGIN_ENDPOINT,APIConstant.POST,singleDataRow);
+		
+		RestAssured.filters(RequestLoggingFilter.logRequestTo(loginstream));
+		RestAssured.filters(ResponseLoggingFilter.logResponseTo(loginstream));
 
 	}
 
