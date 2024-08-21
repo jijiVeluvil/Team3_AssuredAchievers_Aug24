@@ -1,9 +1,8 @@
 
+@userLogoutModule
+Feature:  Testing User LogOut Flow dietician
 
-@userLoginModule
-Feature:  Testing User Flow dietician
-
-Scenario Outline: Check user able to login
+Scenario Outline: Check user able to logout
 Given User creates Logout Get request with request body for "<sheet>" and "<row>"
 When User send POST HTTP request with logout endpoint	
 Then User recieves response code for logout
@@ -16,3 +15,4 @@ Examples:
     |    LogOutSheet |   4 |   
     |    LogOutSheet |   5 | 
     |    LogOutSheet |   6 |  
+		|    LogOutSheet |   8 |  
