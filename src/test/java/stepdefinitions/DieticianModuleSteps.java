@@ -1,7 +1,5 @@
 package stepdefinitions;
 
-
-
 import java.util.Map;
 
 import org.junit.Assert;
@@ -34,21 +32,21 @@ public class DieticianModuleSteps {
 
 	@When("Admin sends HTTP request with endpoint")
 	public void admin_sends_http_request_with_endpoint() {
-		ResponseOptions<Response> resp = apiFunction.ExecuteAPI();
-
-		if (resp.getStatusCode() == 201 && singleDataRow.get("Scenario").equalsIgnoreCase("create_valid_dieticianId")) {
-			dietEmailForDietRole = apiFunction.response.body().path("Email");
-			dietPswdForDietRole = apiFunction.response.body().path("loginPassword");
-			System.out.println(singleDataRow.get("DieticianID") + " " + resp.body().path("id"));
-			Tokens.dietIdMap.put(singleDataRow.get("DieticianId"), Integer.toString(resp.body().path("id")));
-		}
-
+		apiFunction.ExecuteAPI();
 	}
 
 	@Then("Admin recieves response code")
 	public void admin_recieves_response_code() {
 		System.out.println("Expected code : " + singleDataRow.get("expectedCode") + ", Actual code : "
 				+ apiFunction.response.getStatusCode());
+		if (apiFunction.response.getStatusCode() == 201
+				&& singleDataRow.get("Scenario").equalsIgnoreCase("create_valid_dieticianId")) {
+			dietEmailForDietRole = apiFunction.response.body().path("Email");
+			dietPswdForDietRole = apiFunction.response.body().path("loginPassword");
+			System.out.println(singleDataRow.get("DieticianID") + " " + apiFunction.response.body().path("id"));
+			Tokens.dietIdMap.put(singleDataRow.get("DieticianId"),
+					Integer.toString(apiFunction.response.body().path("id")));
+		}
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("ExpectedCode")), apiFunction.response.getStatusCode());
 
 	}
@@ -62,16 +60,16 @@ public class DieticianModuleSteps {
 
 	@When("Dietician send POST HTTP request with endpoint")
 	public void dietician_send_post_http_request_with_endpoint() {
-		ResponseOptions<Response> resp = apiFunction.ExecuteAPI();
+		apiFunction.ExecuteAPI();
 
-		if (resp.getStatusCode() == 200) {
-			System.out.println("Saving token; Key : " + " Value :" + resp.body().path("token"));
-			Tokens.TokenMap.put("dietBearerToken", resp.body().path("token"));
-		}
 	}
 
 	@Then("Dietician recieves login response code")
 	public void dietician_recieves_login_response_code() {
+		if (apiFunction.response.getStatusCode() == 200) {
+			System.out.println("Saving token; Key : " + " Value :" + apiFunction.response.body().path("token"));
+			Tokens.TokenMap.put("dietBearerToken", apiFunction.response.body().path("token"));
+		}
 		Assert.assertEquals(200, apiFunction.response.getStatusCode());
 	}
 
@@ -136,51 +134,45 @@ public class DieticianModuleSteps {
 			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1, APIConstant.GET);
 		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("PUT") && id.equalsIgnoreCase("validId")
 				&& endpoint.equalsIgnoreCase("valid")) {
-			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1, APIConstant.PUT);
+			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1, APIConstant.POST);
 		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("GET") && id.equalsIgnoreCase("invalidId")
 				&& endpoint.equalsIgnoreCase("valid")) {
 			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl2 + "3", APIConstant.GET);
-		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("GET")
-				&& id.equalsIgnoreCase("validId") && endpoint.equalsIgnoreCase("invalid")) {
+		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("GET") && id.equalsIgnoreCase("validId")
+				&& endpoint.equalsIgnoreCase("invalid")) {
 			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), "/dietican/" + dietIDForCRUD,
 					APIConstant.GET);
 		}
 	}
-	
-	//Delete Request
-	
+
+	// Delete Request
+
 	@Given("Admin deletes dietician Id with {string},{string},{string},{string}")
 	public void admin_deletes_dietician_id_with(String token, String method, String id, String endpoint) {
 		String dietIDForCRUD = Tokens.dietIdMap.get("dietIdForCRUD");
 		String dietIdForDietRole = Tokens.dietIdMap.get("dietIdForDietRole");
-		String endpointOfUrl1 = APIConstant.CREATE_DIETICIAN_ENDPOINT + "/" + dietIDForCRUD;;
+		String endpointOfUrl1 = APIConstant.CREATE_DIETICIAN_ENDPOINT + "/" + dietIDForCRUD;
+		;
 		String endpointOfUrl2 = APIConstant.CREATE_DIETICIAN_ENDPOINT + "/" + dietIdForDietRole;
-		
+
 		if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("DELETE") && id.equalsIgnoreCase("validId")
 				&& endpoint.equalsIgnoreCase("valid")) {
 			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1, APIConstant.DELETE);
-		} 
-		else if (token.equalsIgnoreCase("no auth") && method.equalsIgnoreCase("DELETE")
+		} else if (token.equalsIgnoreCase("no auth") && method.equalsIgnoreCase("DELETE")
 				&& id.equalsIgnoreCase("validId") && endpoint.equalsIgnoreCase("valid")) {
 			apiFunction = new APIFunction(null, endpointOfUrl1, APIConstant.DELETE);
+		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("PUT") && id.equalsIgnoreCase("validId")
+				&& endpoint.equalsIgnoreCase("valid")) {
+			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1, APIConstant.PUT);
+		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("DELETE")
+				&& id.equalsIgnoreCase("invalidId") && endpoint.equalsIgnoreCase("valid")) {
+			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1 + "3", APIConstant.DELETE);
+
+		} else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("DELETE")
+				&& id.equalsIgnoreCase("validId") && endpoint.equalsIgnoreCase("invalid")) {
+			apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), "/dieticin/" + dietIDForCRUD,
+					APIConstant.DELETE);
 		}
-	 else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("PUT")
-			&& id.equalsIgnoreCase("validId") && endpoint.equalsIgnoreCase("valid")) {
-		apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1, APIConstant.PUT);
-	}
-	 else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("DELETE")
-			&& id.equalsIgnoreCase("invalidId") && endpoint.equalsIgnoreCase("valid")) {
-		apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), endpointOfUrl1 + "3",
-				APIConstant.DELETE);
-	
-	}
-	 else if (token.equalsIgnoreCase("admin") && method.equalsIgnoreCase("DELETE")
-			&& id.equalsIgnoreCase("validId") && endpoint.equalsIgnoreCase("invalid")) {
-		apiFunction = new APIFunction(Tokens.TokenMap.get("AdminToken"), "/dieticin/" + dietIDForCRUD,
-				APIConstant.DELETE);
-	}
 	}
 
 }
-
-

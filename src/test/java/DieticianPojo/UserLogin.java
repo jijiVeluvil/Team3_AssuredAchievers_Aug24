@@ -1,4 +1,8 @@
-package DietitianPojo;
+
+package DieticianPojo;
+
+import lombok.Data;
+
 
 public class UserLogin {
 

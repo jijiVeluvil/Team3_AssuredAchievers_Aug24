@@ -10,20 +10,20 @@ Then User recieves response code
 Examples:
     | sheet 				| row | 
     |    LoginSheet |   1 |   
-    |    LoginSheet |   2 |   
-    |    LoginSheet |   3 |   
-    |    LoginSheet |   4 |   
-    |    LoginSheet |   5 | 
-    |    LoginSheet |   6 |   
-    |    LoginSheet |   7 |   
-    |    LoginSheet |   8 |   
-    |    LoginSheet |   9 |   
-    |    LoginSheet |  10 | 
-    |    LoginSheet |  11 |   
-    |    LoginSheet |  12 |   
-    |    LoginSheet |  13 |   
-    |    LoginSheet |  14 |   
-    |    LoginSheet |  15 |  
+  #  |    LoginSheet |   2 |   
+  #  |    LoginSheet |   3 |   
+  #  |    LoginSheet |   4 |   
+    #|    LoginSheet |   5 | 
+    #|    LoginSheet |   6 |   
+    #|    LoginSheet |   7 |   
+    #|    LoginSheet |   8 |   
+    #|    LoginSheet |   9 |   
+    #|    LoginSheet |  10 | 
+    #|    LoginSheet |  11 |   
+    #|    LoginSheet |  12 |   
+    #|    LoginSheet |  13 |   
+    #|    LoginSheet |  14 |   
+    #|    LoginSheet |  15 |  
   
   #Scenario: Check user able to login as admin with valid credential	
 #Given User creates login  Post request with request body

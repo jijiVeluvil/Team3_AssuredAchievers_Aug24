@@ -1,4 +1,5 @@
-package DietitianPojo;
+
+package DieticianPojo;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,4 +18,3 @@ public class Dietician {
 	private String HospitalStreet;
 	private String Lastname;	
 }
-

@@ -1,7 +1,5 @@
 package utilities;
 
-import static io.restassured.RestAssured.given;
-
 import java.util.List;
 import java.util.Map;
 
@@ -9,13 +7,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import com.google.gson.Gson;
 
-import DietitianPojo.UserLogin;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import DieticianPojo.UserLogin;
 
 public class DataHandler {
 
-	//static final String path="/Users/ashwini/Desktop/UserLogin.xlsx";
 	static final String path="./src/test/resources/UserDataFile.xlsx";
 	
 	public static String getRequestBody(String scenario)
@@ -38,40 +33,41 @@ public class DataHandler {
 		return listOfRows.get(Integer.parseInt(row)-1);
 	}
 
-	
 
-	public static String GetDieticianRequestBody(String scenario)
+	public static String GetDieticianRequestBody(String sheet, String row)
 	{
 		ExcelReader excelReader = new ExcelReader();
-		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from dietician where scenario='"+scenario+"' ");
+		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from " +sheet );
+				//(path, "Select * from dietician where scenario='"+scenario+"' ");
 
-		Map<String,String> dataMap=listOfRows.get(0);
+		Map<String,String> dataMap=listOfRows.get(Integer.parseInt(row)-1);
 		dataMap.put("ContactNumber",RandomStringUtils.randomNumeric(10));
 		dataMap.put("Email",("amDietician"+RandomStringUtils.randomNumeric(5)+"@gmail.com"));
 		
 		return new Gson().toJson(dataMap);
 	}
 	
-	public static String GetPatientRequestBody(String scenario)
+	public static String GetPatientRequestBody(String sheet, String row)
 	{
 		ExcelReader excelReader = new ExcelReader();
-		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from patient where scenario='"+scenario+"' ");
+		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from " +sheet);
+				//(path, "Select * from patient where scenario='"+scenario+"' ");
 
-		Map<String,String> dataMap=listOfRows.get(0);
+		Map<String,String> dataMap=listOfRows.get(Integer.parseInt(row)-1);
 		dataMap.put("ContactNumber",RandomStringUtils.randomNumeric(10));
 		dataMap.put("Email",("amPatient"+RandomStringUtils.randomNumeric(5)+"@gmail.com"));
-		dataMap.remove("scenario");
-
+		dataMap.remove("Scenario");
+		dataMap.remove("ExpectedCode");
+		dataMap.remove("EndPoint");
+		dataMap.remove("PatientId");
+		dataMap.remove("Method");
+		dataMap.remove("TokenName");
+		dataMap.remove("ContentType");
+		dataMap.remove("File");
+		dataMap.remove("Vitals");
+        
 		return new Gson().toJson(dataMap);
 	}
-	
-	public static Map<String, String> getDataRowMor(String sheetName, String row) {
-	    ExcelReader excelReader = new ExcelReader();
-	    List<Map<String, String>> listOfRows = excelReader.getExcelDataWithFilloAPI(path, "Select * from " + sheetName);
-	    return listOfRows.get(Integer.parseInt(row) - 1);
-	}
-
-	
 	
 	public static String Logout(String scenario) {
 		ExcelReader excelReader = new ExcelReader();
