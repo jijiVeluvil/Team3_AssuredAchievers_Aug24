@@ -1,6 +1,16 @@
 @DieticianModule
 Feature:  DieticianModule
 
+ Scenario Outline: Check user able to login
+Given User creates login Post request with request body for "<sheet>" and "<row>"
+When User send POST HTTP request with endpoint	
+Then User recieves response code
+
+Examples:
+    | sheet 				| row | 
+    |    LoginSheet |   1 |   
+    |    LoginSheet  |2 | 
+    
 @Post_Request_To_create_dietician_with_valid_datas
 Scenario Outline: Check admin able to create dietician with valid datas
 Given Admin creates dietician with request body for "<sheet>" and "<row>"
@@ -23,16 +33,19 @@ Examples:
  When Admin sends HTTP request with endpoint	
  Then Admin recieves response code 
   Examples:
-   | sheet | row |
+   | sheet     | row |
    | dietician | 3 |
-   | dietician | 4 |
+   | dietician |  4|
    | dietician | 5 |
    | dietician | 6 |
    | dietician | 7 | 
    | dietician | 8 |
    | dietician | 9 |
-   | dietician | 10 |
-   | dietician | 11 |
+   | dietician | 10|
+   | dietician | 11|
+   |dietician  |27|
+   |dietician  |28|
+   |dietician  |29|
    
   @PUT_Request_to_Update_dietician 
  Scenario Outline: Check Admin able to update dietician with valid datas or invalid datas
@@ -52,6 +65,8 @@ Examples:
    | dietician | 22 |
    | dietician | 23 |
    | dietician | 24 |
+   |dietician  |30  |
+   |dietician  |31 |
    
 @Dietician
  Scenario Outline: Check Admin able to retrieve Dietician details with valid or invalid datas
@@ -62,9 +77,10 @@ Examples:
  | token     | method | endpoint | statusCode | respMsg |
  | no auth   | GET    | valid    | 401       | HTTP/1.1 401 | 
  | admin     | GET    | valid    | 200       | HTTP/1.1 200 | 
- | admin   | PUT    | valid    | 405       | HTTP/1.1 405 |
- | admin | GET    | invalid  | 404        | HTTP/1.1 404 |
- 
+ | admin     | PUT    | valid    | 405       | HTTP/1.1 405 |
+ | admin     | GET    | invalid  | 404        | HTTP/1.1 404 |
+ |dietician|GET    |valid     |200         |HTTP/1.1 200|
+ |patient|GET    |valid     |200        |HTTP/1.1 200|
  
  @Get_Req_to_get_dietician_details_by_dieticianId
  Scenario Outline: Check Admin able to retrieve Dietician details with valid or invalid datas
@@ -72,13 +88,14 @@ Examples:
  When Admin sends HTTP request
  Then Admin recieves response status code "<statusCode>" with "<respMsg>" message
  Examples: 
- | token     | method | id      | endpoint | statusCode | respMsg |
- | no auth   | GET    | validId | valid    | 401        | HTTP/1.1 401 |
- | admin     | GET    | validId | valid    | 200        | HTTP/1.1 200 |
- | admin     | PUT    | validId | valid    | 405       | HTTP/1.1 405|
+ | token     | method | id      | endpoint   | statusCode | respMsg |
+ | no auth   | GET    | validId | valid      | 401        | HTTP/1.1 401 |
+ | admin     | GET    | validId | valid      | 200        | HTTP/1.1 200 |
+ | admin     | PUT    | validId | valid      | 405        | HTTP/1.1 405|
  | admin     | GET    | invalidId | valid    | 404        | HTTP/1.1 404 |
  | admin    |  GET    | validId | invalid    | 404        | HTTP/1.1 404 |
- 
+  |dietician|GET    |valid      |valid       |200        |HTTP/1.1 200|
+ |patient|GET    |valid         |valid       |200         |HTTP/1.1 200|
  
  @Delete_Req_to_delete_dieticianId
  Scenario Outline: Check Admin able to delete dietician Id with valid or invalid datas
@@ -89,11 +106,11 @@ Examples:
  | token | method | id      | endpoint | statusCode  | respMsg |
  | no auth | DELETE | validId | valid  | 401          | HTTP/1.1 401 |
  | admin | DELETE | validId | valid    | 200          | HTTP/1.1 200 |
- | admin | PUT    | validId | valid    | 405         | HTTP/1.1 405 |    
- | admin | DELETE | invalidId | valid   | 404        | HTTP/1.1 404 |
- | admin | DELETE    | validId | invalid    | 404       | HTTP/1.1 404 |   
- 
-
+ | admin | PUT    | validId | valid    | 405          | HTTP/1.1 405 |    
+ | admin | DELETE | invalidId | valid   | 404         | HTTP/1.1 404 |
+ | admin | DELETE | validId | invalid   | 404        | HTTP/1.1 404 |   
+ |dietician|GET    |valid    |valid     |403          |HTTP/1.1 403|
+ |patient |GET    |valid     |    valid|403          |HTTP/1.1 403|
   
  
   
