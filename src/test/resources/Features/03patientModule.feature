@@ -1,0 +1,171 @@
+@Patient_Module
+Feature: Patient Module
+
+  @POST_Request_to_Create_Patient
+  Scenario Outline: Check dietician able to create patient with valid datas 
+	Given Dietician creates patient with request body for "<sheet>" and "<row>"
+	When Dietician sends HTTP request with endpoint	
+	Then Dietician recieves response code 
+	
+	Examples:
+    | sheet 				| row | 
+    | patient     | 1 |
+    | patient     | 2 |
+    | patient     | 3 |
+ 
+ @POST_Request_to_Create_Token
+ Scenario: Check patient able to login
+ Given Patient creates login Post request with request body 
+ When Patient send POST HTTP request with endpoint	
+ Then Patient recieves response code
+
+@POST_Request
+ Scenario Outline: Check dietician able to create patient with invalid datas or missing fields
+ Given Dietician creates patient with request body for "<sheet>" and "<row>"
+ When Dietician sends HTTP request with endpoint	
+ Then Dietician recieves response code 
+  Examples:
+   | sheet | row |
+   | patient | 4 |
+   | patient | 5 |
+   | patient | 6 |
+   | patient | 7 |
+   | patient | 8 |
+   | patient | 9 |
+   | patient | 10 |
+   | patient | 11 |
+   | patient | 12 |
+   | patient | 13 |
+ 
+ @PUT_Request_to_Update_Patient 
+ Scenario Outline: Check dietician able to update patient with valid datas or invalid datas
+ Given Dietician updates patient details with request body for "<sheet>" and "<row>"
+ When Dietician sends HTTP request with endpoint	
+ Then Dietician recieves response code 
+  Examples:
+   | sheet | row |
+   | patient | 16 |
+   | patient | 17 |
+   | patient | 18 |
+   | patient | 19 |
+   | patient | 20 |
+   | patient | 21 |
+   | patient | 22 |
+   | patient | 23 |
+   | patient | 24 |
+   | patient | 25 |
+   | patient | 26 |
+   | patient | 27 |
+   
+ @PUT_Request_to_Update_Patient_Report_And_Vitals 
+ Scenario Outline: Check dietician able to update patient report with valid datas or invalid datas
+ Given Dietician updates patient report and vitals with request body for "<sheet>" and "<row>"
+ When Dietician sends HTTP request with endpoint	
+ Then Dietician recieves response code
+  Examples: 
+   | sheet | row |
+   | patient | 30 |
+   | patient | 31 |
+   | patient | 32 |
+   | patient | 33 |
+   | patient | 34 |
+   | patient | 35 |
+   | patient | 36 |
+   | patient | 37 |
+   | patient | 38 |
+   | patient | 39 | 
+   | patient | 40 |
+   | patient | 41 |  
+   | patient | 42 |
+   | patient | 43 | 
+   
+ @Get_Req_to_get_all_patient
+ Scenario Outline: Check dietician able to retrieve patient details with valid or invalid datas
+ Given Dietician retrieves all patient details with "<token>","<method>","<endpoint>"
+ When Dietician sends HTTP request
+ Then Dietician recieves response status code "<statusCode>" with "<respMsg>" message
+ Examples: 
+ | token | method | endpoint | statusCode | respMsg |
+ | dietician | GET | valid | 200 | HTTP/1.1 200 | 
+ | admin | GET | valid | 403 | HTTP/1.1 403 | 
+ | patient | GET | valid | 403 | HTTP/1.1 403 |
+ | no auth | GET | valid | 401 | HTTP/1.1 401 |
+ | dietician | PUT | valid | 405 | HTTP/1.1 405 |
+ | dietician | GET | invalid | 404 | HTTP/1.1 404 |
+ 
+ @Get_Req_to_get_patient_Morbidity_details
+ Scenario Outline: Check dietician able to retrieve patient morbidity details with valid or invalid datas
+ Given Dietician retrieves morbidity details with "<token>","<method>","<id>","<endpoint>"
+ When Dietician sends HTTP request
+ Then Dietician recieves response status code "<statusCode>" with "<respMsg>" message
+ Examples: 
+ | token | method | id | endpoint | statusCode | respMsg |
+ | dietician | GET | validId | valid | 200 | HTTP/1.1 200 |
+ | admin | GET | validId | valid | 403 | HTTP/1.1 403 |
+ | patient | GET | validId | valid | 200 | HTTP/1.1 200 |
+ | no auth | GET | validId | valid | 401 | HTTP/1.1 401 |
+ | dietician | POST | validId | valid | 405 | HTTP/1.1 405 |
+ | dietician | GET | invalidId | valid | 404 | HTTP/1.1 404 |
+ | dietician | GET | validId | invalid | 404 | HTTP/1.1 404 |       
+ 
+ @Get_Req_to_get_patient_file
+ Scenario Outline: Check dietician able to retrieve patient file with valid or invalid datas
+ Given Dietician gets patient file with "<token>","<method>","<id>","<endpoint>"
+ When Dietician sends HTTP request
+ Then Dietician recieves response status code "<statusCode>" with "<respMsg>" message
+ Examples: 
+ | token | method | id | endpoint | statusCode | respMsg |
+ | dietician | GET | validId | valid | 200 | HTTP/1.1 | 
+ | admin | GET | validId | valid | 403 | Forbidden | 
+ | patient | GET | validId | valid | 200 | HTTP/1.1 |
+ | no auth | GET | validId | valid | 401 | HTTP/1.1 401 |
+ | dietician | POST | validId | valid | 405 | Method not allowed | 
+ | dietician | GET | invalidId | valid | 404 | Not Found |
+ | dietician | GET | validId | invalid | 404 | Not Found |
+ 
+ @Delete_Req_to_delete_patientId
+ Scenario Outline: Check dietician able to delete patient Id with valid or invalid datas
+ Given Dietician deletes patient Id with "<token>","<method>","<id>","<endpoint>"
+ When Dietician sends HTTP request
+ Then Dietician recieves response status code "<statusCode>" with "<respMsg>" message
+ Examples: 
+ | token | method | id | endpoint | statusCode | respMsg |
+ | admin | DELETE | validId | valid | 403 | Forbidden |
+ | patient | DELETE | validId | valid | 403 | Forbidden |
+ | no auth | DELETE | validId | valid | 401 | Unauthorized |
+ | dietician | POST | validId | valid | 405 | Method not allowed |
+ | dietician | DELETE | invalidId | valid | 404 | Not Found |
+ | dietician | DELETE | validId | invalid | 404 | Not Found |
+ | dietician | DELETE | validId | valid | 200 | HTTP/1.1 |
+ | dietician | DELETE | validId1 | valid | 200 | HTTP/1.1 |
+  
+  
+ 
+ 
+ 
+ 
+ 
+
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
