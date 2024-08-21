@@ -11,9 +11,13 @@ import io.cucumber.junit.CucumberOptions;
 		},
 		monochrome=false,
 		dryRun=false,
-		features= {"src/test/resources/features/01userLoginModule1.feature",
-				"src/test/resources/features/02dieticianModule.feature",
-				"src/test/resources/features/03patientModule.feature"},
+		features= {"src/test/resources/features/01UserLoginModule1.feature",
+				"src/test/resources/features/02DieticianModule.feature",
+				"src/test/resources/features/03PatientModule.feature",
+				"src/test/resources/features/04Morbidity.feature",
+				"src/test/resources/features/05DataCleanUp.feature",
+				"src/test/resources/features/06UserLogOut.feature"
+				},
 		glue={"stepdefinition","hooks"}
 		)
 

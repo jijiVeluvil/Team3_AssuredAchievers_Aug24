@@ -15,4 +15,7 @@ public class APIConstant {
 	public static final String ViewFile_ENDPOINT = "/patient/testReports/viewFile";
 	public static final String GET_Patient_TestReport_ENDPOINT = "/patient/testReports";
 	public static final String USER_LOGOUT_ENDPOINT = "/logoutdietician";
+	public static  final String GET_ALL_MORBIDITY = "/morbidity";
+	
+	public static final String Patient_Json_Schema = "./src/test/resources/PatientSchema.json";
 }
