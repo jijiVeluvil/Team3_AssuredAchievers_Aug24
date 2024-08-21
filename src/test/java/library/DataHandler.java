@@ -1,4 +1,4 @@
-package utilities;
+package library;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import com.google.gson.Gson;
 
 import DieticianPojo.UserLogin;
+import utilities.ExcelReader;
 
 public class DataHandler {
 
@@ -69,11 +70,11 @@ public class DataHandler {
 		return new Gson().toJson(dataMap);
 	}
 	
-	public static String Logout(String scenario) {
-		ExcelReader excelReader = new ExcelReader();
-		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from LogOutSheet where scenario='"+scenario+"' ");
-		Map<String,String> dataMap=listOfRows.get(0);
-		return new Gson().toJson(dataMap);
-		
-	}
+//	public static String Logout(String scenario) {
+//		ExcelReader excelReader = new ExcelReader();
+//		List<Map<String, String>> listOfRows= excelReader.getExcelDataWithFilloAPI(path, "Select * from LogOutSheet where scenario='"+scenario+"' ");
+//		Map<String,String> dataMap=listOfRows.get(0);
+//		return new Gson().toJson(dataMap);
+//		
+//	}
 }

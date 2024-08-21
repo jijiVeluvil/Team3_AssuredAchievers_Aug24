@@ -1,5 +1,4 @@
-
-package stepdefinitions;
+package stepdefinition;
 
 import java.util.Map;
 
@@ -8,10 +7,10 @@ import org.junit.Assert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import utilities.APIConstant;
-import utilities.APIFunction;
-import utilities.DataHandler;
-import utilities.Tokens;
+import library.APIConstant;
+import library.APIFunction;
+import library.DataHandler;
+import library.Tokens;
 
 public class UserLogout {
 	APIFunction apiFunction;

@@ -1,4 +1,4 @@
-package stepdefinitions;
+package stepdefinition;
 
 import java.util.Map;
 
@@ -7,13 +7,13 @@ import org.junit.Assert;
 import com.google.gson.Gson;
 
 import DieticianPojo.UserLogin;
-import io.cucumber.java.en.*;
-import io.restassured.response.Response;
-import io.restassured.response.ResponseOptions;
-import utilities.APIConstant;
-import utilities.APIFunction;
-import utilities.DataHandler;
-import utilities.Tokens;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import library.APIConstant;
+import library.APIFunction;
+import library.DataHandler;
+import library.Tokens;
 
 public class DieticianModuleSteps {
 	APIFunction apiFunction;

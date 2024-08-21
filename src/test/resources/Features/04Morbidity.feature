@@ -67,6 +67,7 @@ Feature:  Testing User Flow dietician
  Given Creates request for the user to get morbidity by testname with "<sheet>" and "<row>"
  When User sends HTTP get request
  Then User recieves response status code for getting morbidity by testname
+ Examples:
  | sheet     | row |
  | Morbidity | 1 |
  | Morbidity | 2 |

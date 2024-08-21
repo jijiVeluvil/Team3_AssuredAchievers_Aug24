@@ -11,7 +11,7 @@ import io.cucumber.junit.CucumberOptions;
 		},
 		monochrome=false,
 		dryRun=false,
-		features= {"src/test/resources/features/01UserLoginModule1.feature",
+		features= {"src/test/resources/features/01UserLoginModule.feature",
 				"src/test/resources/features/02DieticianModule.feature",
 				"src/test/resources/features/03PatientModule.feature",
 				"src/test/resources/features/04Morbidity.feature",
