@@ -47,14 +47,25 @@ public class UserLogout {
 
 	@Then("User recieves response code for logout")
 	public void user_recieves_response_code_for_logout() {
-		
+		System.out.println("--------- Response for Logout -------------\n");
 		System.out.println("Expected code : "+singleDataRow.get("expectedCode")+", Actual code : "+apiFunction.response.getStatusCode());
 		Assert.assertEquals(Integer.parseInt(singleDataRow.get("expectedCode")), apiFunction.response.getStatusCode());
-		System.out.println("--------- Logging status -------------\n");
+		System.out.println("\nLogging status -->");
 		apiFunction.response.then().log().status();
+		if(apiFunction.response.getStatusCode()==200)
+		{
 		String contentType="text/plain;charset=UTF-8";
-		System.out.println("--------- Response Content Type -------------\n"+apiFunction.response.contentType());
-		Assert.assertEquals(contentType, apiFunction.response.contentType());		
+		System.out.println("Response Content Type -->"+apiFunction.response.contentType());
+		Assert.assertEquals(contentType, apiFunction.response.contentType());	
+		}
+		else
+		{
+			System.out.println("Error-->"+apiFunction.response.body().path("error"));
+			String contentType="application/json";
+			System.out.println("Response Content Type-->"+apiFunction.response.contentType());
+			Assert.assertEquals(contentType, apiFunction.response.contentType());	
+			
+		}
 
 	}
 }
