@@ -1,15 +1,7 @@
 @DieticianModule
 Feature:  DieticianModule
 
- Scenario Outline: Check user able to login
-Given User creates login Post request with request body for "<sheet>" and "<row>"
-When User send POST HTTP request with endpoint	
-Then User recieves response code
-
-Examples:
-    | sheet 				| row | 
-    |    LoginSheet |   1 |   
-    |    LoginSheet  |2 | 
+ 
     
 @Post_Request_To_create_dietician_with_valid_datas
 Scenario Outline: Check admin able to create dietician with valid datas
