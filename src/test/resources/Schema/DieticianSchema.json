@@ -1,0 +1,52 @@
+ {
+     
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "Firstname": {
+          "type": "string"
+        },
+        "Lastname": {
+          "type": "string"
+        },
+        "ContactNumber": {
+          "type": "string"
+        },
+        "DateOfBirth": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "HospitalName": {
+          "type": "string"
+        },
+        "HospitalStreet": {
+          "type": "string"
+        },
+        "HospitalCity": {
+          "type": "string"
+        },
+        "HospitalPincode": {
+          "type": "string"
+        },
+        "Education": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "Firstname",
+        "Lastname",
+        "ContactNumber",
+        "DateOfBirth",
+        "Email",
+        "HospitalName",
+        "HospitalStreet",
+        "HospitalCity",
+        "HospitalPincode",
+        "Education"
+      ]
+    }
