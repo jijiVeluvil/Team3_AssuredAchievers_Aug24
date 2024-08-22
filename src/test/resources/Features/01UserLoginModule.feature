@@ -8,22 +8,20 @@ When User send POST HTTP request with endpoint
 Then User recieves response code
 
 Examples:
-    | sheet 				| row | 
-    |    LoginSheet |   1 |   
-    |    LoginSheet |   2 |   
-    |    LoginSheet |   3 |   
-    |    LoginSheet |   4 |   
-    |    LoginSheet |   5 | 
-    |    LoginSheet |   6 |   
-    |    LoginSheet |   7 |   
-    |    LoginSheet |   8 |   
-    |    LoginSheet |   9 |   
-    |    LoginSheet |  10 | 
-    |    LoginSheet |  11 |   
-    |    LoginSheet |  12 |   
-    |    LoginSheet |  13 |   
-    |    LoginSheet |  14 |   
-    |    LoginSheet |  15 |  
+    |     sheet   | row | 
+    |  LoginSheet |   1 |   
+    |  LoginSheet |   2 |   
+    |  LoginSheet |   3 |   
+    |  LoginSheet |   4 |   
+    |  LoginSheet |   5 | 
+    |  LoginSheet |   6 |   
+    |  LoginSheet |   7 |   
+    |  LoginSheet |   8 |   
+    |  LoginSheet |   9 |   
+    |  LoginSheet |  10 |   
+    |  LoginSheet |  11 |   
+    |  LoginSheet |  12 |   
+    |  LoginSheet |  13 |  
   
  
   

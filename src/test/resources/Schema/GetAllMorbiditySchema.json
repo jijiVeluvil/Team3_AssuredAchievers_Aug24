@@ -1,0 +1,38 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "morbidityId": {
+        "type": "number"
+      },
+      "morbidityTestId": {
+        "type": "string"
+      },
+      "morbidityNameRegex": {
+        "type": "string"
+      },
+      "morbidityTestName": {
+        "type": "string"
+      },
+      "morbidityTestUnit": {
+        "type": "string"
+      },
+      "morbidityMarkerMinVal": {
+        "type": "number"
+      },
+      "morbidityMarkerMaxVal": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "morbidityId",
+      "morbidityTestId",
+      "morbidityNameRegex",
+      "morbidityTestName",
+      "morbidityTestUnit",
+      "morbidityMarkerMinVal",
+      "morbidityMarkerMaxVal"
+    ]
+  }
+}

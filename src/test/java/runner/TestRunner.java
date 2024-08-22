@@ -6,8 +6,8 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 		plugin= {"pretty","html:target/Team3_AssuredAchievers.html",
-				//"pretty","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-				//"pretty","io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+				"pretty","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+				"pretty","io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
 		},
 		monochrome=false,
 		dryRun=false,
