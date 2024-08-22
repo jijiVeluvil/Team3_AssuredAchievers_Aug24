@@ -112,7 +112,7 @@ public class APIFunction {
 	 */
 
 	public APIFunction(String endpoint, String method, String token,
-			dieticianPojo.PatientDataFieldsVo patientDataFieldsVo, Map<String, String> singleDataRow) {
+			DieticianPojo.PatientDataFieldsVo patientDataFieldsVo, Map<String, String> singleDataRow) {
 
 		commonInit(endpoint, method, singleDataRow);
 

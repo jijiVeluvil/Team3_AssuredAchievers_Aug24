@@ -12,7 +12,7 @@ import org.junit.Assert;
 
 import com.google.gson.Gson;
 
-import dieticianPojo.UserLogin;
+import DieticianPojo.UserLogin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

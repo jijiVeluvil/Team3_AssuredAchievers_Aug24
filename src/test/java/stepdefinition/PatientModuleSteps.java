@@ -14,8 +14,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import dieticianPojo.PatientDataFieldsVo;
-import dieticianPojo.UserLogin;
+import DieticianPojo.PatientDataFieldsVo;
+import DieticianPojo.UserLogin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

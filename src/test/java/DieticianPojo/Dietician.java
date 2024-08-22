@@ -17,4 +17,6 @@ public class Dietician {
 	private String HospitalPincode;
 	private String HospitalStreet;
 	private String Lastname;	
+
 }
+

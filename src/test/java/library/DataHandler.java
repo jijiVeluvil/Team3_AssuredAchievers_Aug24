@@ -7,7 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import com.google.gson.Gson;
 
-import dieticianPojo.UserLogin;
+import DieticianPojo.UserLogin;
 import utilities.ExcelReader;
 
 public class DataHandler {
