@@ -13,10 +13,10 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import utilities.APIConstant;
-import utilities.APIFunction;
-import utilities.DataHandler;
-import utilities.Tokens;
+import library.APIConstant;
+import library.APIFunction;
+import library.DataHandler;
+import library.Tokens;
 
 public class UserLogout {
 	APIFunction apiFunction;

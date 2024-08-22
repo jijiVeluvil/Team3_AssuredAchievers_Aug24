@@ -6,16 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import DietitianPojo.PatientDataFieldsVo;
 import DietitianPojo.UserLogin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,11 +17,10 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.module.jsv.JsonSchemaValidator;
-import io.restassured.response.Response;
-import utilities.APIConstant;
-import utilities.APIFunction;
-import utilities.DataHandler;
-import utilities.Tokens;
+import library.APIConstant;
+import library.APIFunction;
+import library.DataHandler;
+import library.Tokens;
 
 public class UserLoginModuleSteps 
 {
@@ -54,7 +46,7 @@ public class UserLoginModuleSteps
 		String body= new Gson().toJson(login);
 
 		apiFunction = new APIFunction(body,APIConstant.USER_LOGIN_ENDPOINT,APIConstant.POST,singleDataRow);
-		
+
 		RestAssured.filters(RequestLoggingFilter.logRequestTo(loginstream));
 		RestAssured.filters(ResponseLoggingFilter.logResponseTo(loginstream));
 
@@ -75,16 +67,13 @@ public class UserLoginModuleSteps
 			if(apiFunction.response.body().path("token")!=null && singleDataRow.get("TokenName") !=null)
 			{
 				System.out.println("--------- On Success Store token to token map -------------");
-				//log.append("\nSaving token; Key :  "+singleDataRow.get("TokenName") +", Value : "+apiFunction.response.body().path("token"));
+				
 				System.out.println("Saving token; Key :  "+singleDataRow.get("TokenName") +", Value : "+apiFunction.response.body().path("token"));
 
 				Tokens.TokenMap.put(singleDataRow.get("TokenName") ,apiFunction.response.body().path("token"));
 
 				System.out.println("--------- Json Schema Validation -------------");
 				apiFunction.response.then().body(JsonSchemaValidator.matchesJsonSchema(loginjsonSchema));
-
-				System.out.println("--------- Logging header ------------\n");
-				apiFunction.response.then().log().headers();	
 
 				System.out.println("--------- Logging status -------------\n");
 				apiFunction.response.then().log().status();
